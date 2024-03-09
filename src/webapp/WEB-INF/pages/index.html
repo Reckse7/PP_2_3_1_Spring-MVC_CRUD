@@ -11,27 +11,31 @@
     <input type="button" value="add user" />
 </a>
 <div>
-    <table border = "1">
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Age</th>
-        </tr>
-        <tr th:each="user : ${users}">
-            <td th:utext="${user.name}"></td>
-            <td th:utext="${user.email}"></td>
-            <td th:utext="${user.age}"></td>
-            <td>
-                <a th:href="@{edit(id=${user.id})}">
-                    <input type="button" value="edit" />
-                </a>
-            </td>
-            <td>
-                <a th:href="@{delete(id=${user.id})}">
-                    <input type="button" value="delete" />
-                </a>
-            </td>
-        </tr>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td><span th:utext="${user.name}">Name</span></td>
+                <td><span th:utext="${user.email}">Email</span></td>
+                <td><span th:utext="${user.age}">Age</span></td>
+                <td>
+                    <a th:href="@{edit(id=${user.id})}">
+                        <input type="button" value="edit" />
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{delete(id=${user.id})}">
+                        <input type="button" value="delete" />
+                    </a>
+                </td>
+            </tr>
+        </tbody>
     </table>
 </div>
 </body>
