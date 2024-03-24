@@ -5,9 +5,8 @@ import app.model.User;
 import java.util.List;
 
 public interface UserService {
-    void add(User user);
-    void edit(User user);
-    void delete(User user);
+    void save(User user);
+    void delete(int id);
     User getById(int id);
     List<User> getAllUsers();
 }

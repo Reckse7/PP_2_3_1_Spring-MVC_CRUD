@@ -5,11 +5,13 @@ import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -36,28 +38,28 @@ public class UserController {
         return "edit";
     }
 
-    @PostMapping("/edit")
-    public String editUser(@ModelAttribute("user") User user) {
-        service.edit(user);
-        return "redirect:/";
-    }
-
     @GetMapping("/add")
     public String addPage(ModelMap model) {
         model.addAttribute("user", new User());
         return "add";
     }
 
-    @PostMapping("/add")
-    public String addUser(@ModelAttribute("user") User user) {
-        service.add(user);
+    @PostMapping("/save")
+    public String addUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            if (user.getId() != null) {
+                return "edit";
+            } else {
+                return "add";
+            }
+        }
+        service.save(user);
         return "redirect:/";
     }
 
     @GetMapping("/delete")
     public String deleteUser(@RequestParam int id) {
-        User user = service.getById(id);
-        service.delete(user);
+        service.delete(id);
         return "redirect:/";
     }
 }
